@@ -7,15 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fruits Index</title>
   </head>
- <body>
+<!-- views/fruits/index.ejs -->
+
+<!-- views/fruits/index.ejs -->
+
+<body>
     <h1>All Fruits</h1>
     <ul>
       <% fruits.forEach(fruit => { %>
-        <li><%= fruit.name %></li>
+        <li>
+          <a href="/fruits/<%= fruit._id %>"> <%= fruit.name %> </a>
+        </li>
       <% }); %>
     </ul>
   </body>
   
-  
-  </body>
+
 </html>

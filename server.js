@@ -32,6 +32,16 @@ app.get("/fruits/new", (req, res) => {
     res.render("fruits/new.ejs");
   });
 
+  //We’ll use Mongoose’s .findById() method for fetching a specific fruit by its _id. This method is perfect for retrieving a single document based on its unique identifier.
+  app.get("/fruits/:fruitId", async (req, res) => {
+    const foundFruit = await Fruit.findById(req.params.fruitId);
+    res.render("fruits/show.ejs", { fruit: foundFruit });
+  });
+  
+  
+
+
+
   // GET /fruits index route using find method
   //app.get("/fruits", async (req, res) => {
     //const allFruits = await Fruit.find();
@@ -54,7 +64,7 @@ app.post("/fruits", async (req, res) => {
       req.body.isReadyToEat = false;
     }
     await Fruit.create(req.body);
-    res.redirect("/fruits/new");
+    res.redirect("/fruits"); // redirect to index fruits
   });
 
 
