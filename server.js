@@ -1,12 +1,13 @@
 // Here is where we import modules
 // We begin by loading Express
+const express = require("express");
+const app = express();
 const dotenv = require("dotenv"); // require package
 dotenv.config(); // Loads the environment variables from .env file
+const methodOverride = require("method-override");
+const morgan = require("morgan");
+
 const mongoose = require("mongoose"); // require package
-
-const express = require("express");
-
-const app = express();
 
 // Connect to MongoDB using the connection string in the .env file
 mongoose.connect(process.env.MONGODB_URI);
@@ -18,7 +19,8 @@ mongoose.connection.on("connected", () => {
 const Fruit = require("./models/fruit.js");
 
 app.use(express.urlencoded({ extended: false }));
-
+app.use(methodOverride("_method")); // new
+app.use(morgan("dev")); //new
 
 
 // GET /
@@ -38,9 +40,6 @@ app.get("/fruits/new", (req, res) => {
     res.render("fruits/show.ejs", { fruit: foundFruit });
   });
   
-  
-
-
 
   // GET /fruits index route using find method
   //app.get("/fruits", async (req, res) => {
@@ -68,13 +67,12 @@ app.post("/fruits", async (req, res) => {
   });
 
 
-
-
-
-
-
-
-
+  app.delete("/fruits/:fruitId", async (req, res) => {
+    await Fruit.findByIdAndDelete(req.params.fruitId);
+    res.redirect("/fruits");
+  });
+  
+  
 
 
 app.listen(3000, () => {
