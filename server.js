@@ -33,12 +33,16 @@ app.get("/fruits/new", (req, res) => {
   });
 
   // GET /fruits index route using find method
-  app.get("/fruits", async (req, res) => {
-    const allFruits = await Fruit.find();
-    console.log(allFruits); // log the fruits!
-    res.send("Welcome to the index page!");
-  });
+  //app.get("/fruits", async (req, res) => {
+    //const allFruits = await Fruit.find();
+    //console.log(allFruits); // log the fruits!
+    //res.send("Welcome to the index page!");
+ // });
   
+ app.get("/fruits", async (req, res) => {
+    const allFruits = await Fruit.find();
+    res.render("fruits/index.ejs", { fruits: allFruits });
+  });
   
   
 
